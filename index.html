@@ -5,24 +5,234 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Handling JS</title>
     <style>
-       
+        body{
+            background-color: pink;
+        }
+       h1{
+        text-align: center;
+        color: red;
+        text-decoration: underline green;
+       }
+       h3{
+        color: blue;
+        text-align: center;
+       }
+       .div{
+        border: 2px green solid;
+        height: 350vh;
+        padding: 20px;
+       }
+       .div h2{
+        color: red;
+       }
+       .div li{
+        color: brown;
+       }
+       .div p{
+        color: green;
+       }
+       .div h3{
+        color: blue;
+        text-align: left;
+       }
     </style>
 </head>
 <body>
-    <button onclick="sum()">Click</button>
-    <button id="btn">Whish</button>
+    <h1>Events & Event Handling in JavaScript</h1>
+
+<h3>In JavaScript, **events** are actions that occur in the system you are working with. These actions might involve user interactions with the page, such as clicking a button, submitting a form, or pressing a key, or system-generated events, such as the page finishing loading. **Event handling** refers to the process of responding to these events with JavaScript.</h3>
+<div class="div">
+<h2>*What is an Event?*</h2>
+
+<p>An **event** is something that happens in the browser, like a user action or a change in the state of the browser. Events can be triggered by actions like:</p>
+<li> Mouse clicks</li>
+<li>Keyboard inputs</li> 
+<li>Page loading</li>
+<li>Form submissions</li>
+<li>Window resizing</li>
+<li>Scrolling</li>
+
+<p>Each event type in JavaScript can be associated with a specific event handler (a JavaScript function) that gets triggered when the event occurs.</p>
+
+<h2>*Types of Events in JavaScript*</h2>
+
+<li>Here are some common event types in JavaScript:</li>
+
+<h3>**Mouse Events:**</h3>
+<li>`click`: When the user clicks on an element (e.g., a button).</li>
+<li>`dblclick`: When the user double-clicks on an element.</li> 
+<li>`mouseover`: When the mouse pointer enters an element.</li>
+<li>`mouseout`: When the mouse pointer leaves an element.</li>
+<li>`mousemove`: When the mouse pointer moves over an element.</li>
+
+<h3>**Keyboard Events:**</h3>
+<li>`keydown`: When a key is pressed down.</li>
+<li>`keyup`: When a key is released.</li>
+<li>`keypress`: When a character key is pressed.</li>
+
+<h3>**Form Events:**</h3>
+<li>`submit`: When a form is submitted.</li>
+<li>`change`: When the value of an element (like an input) changes.</li> 
+<li>`focus`: When an element (like an input) gains focus.</li>
+<li>`blur`: When an element (like an input) loses focus.</li>
+
+<h3>**Window Events:**</h3>
+<li>`load`: When the page and all its resources have finished loading.</li>
+<li>`resize`: When the window is resized.</li>
+<li>`scroll`: When the page is scrolled.</li>
+
+<h3> **Touch Events (for mobile devices):**</h3>
+<li>`touchstart`: When the user touches the screen.</li>
+<li>`touchend`: When the touch is released.</li>
+<li>`touchmove`: When the user moves their finger on the screen.</li>
+
+<h2>**Event Handling in JavaScript**</h2>
+
+<p>Event handling in JavaScript allows us to define how our application responds when an event occurs. There are several ways to handle events:</p>
+
+<h3>Inline Event Handling</h3>
+
+<li>You can define an event handler directly in your HTML using attributes like `onclick`, `onmouseover`, etc.
+</li>
+<p>
+<button onclick="alert('Button clicked!')">Click Me</button>
+</p>
+<p>
+This approach works but isn't considered ideal for more complex projects because it mixes HTML with JavaScript.
+</p>
+<h3> Using `addEventListener` (Recommended)</h3>
+
+<li>The **`addEventListener`** method is the preferred way to attach event handlers. It allows multiple event listeners to be added to the same element, which is great for handling different events on the same element.
+</li>
+<p>
+<button id="myButton">Click Me</button>
+</p>
+
+<p> **Advantages of `addEventListener`**: <br>
+  - You can attach multiple event listeners to the same element. <br>
+  - It supports events in both capturing and bubbling phases. <br>
+  - You can remove event listeners later using `removeEventListener`. <br>
+</p>
+<h3> Using `on_Event` Properties</h3>
+
+<li>Another method is using the built-in properties of DOM elements to directly assign an event handler. For example:
+</li>
+<p>
+const button = document.getElementById('myButton'); <br>
+
+// Directly assigning an event handler  <br>
+button.onclick = function() { <br>
+    alert('Button clicked!'); <br>
+}; <br>
+</p>
+
+<p>**Disadvantages**:  <br>
+  - Only one event handler can be assigned to each event. <br>
+  - If you assign a new handler to the same event, it will overwrite the previous one. <br>
+  </p>
+
+<h3>  Using `Event` Object</h3>
+
+<li>When an event occurs, the browser passes an `event` object to the event handler, which contains useful information about the event. For example, you can find out which key was pressed or which element triggered the event.
+</li>
+<p>
+button.addEventListener('click', function(event) { <br>
+    console.log('Element clicked:', event.target); <br>
+    console.log('Event type:', event.type); <br>
+}); <br>
+</p>
+
+<h2>**Common Event Handling Methods**</h2>
+
+<h3>`preventDefault()`:</h3>
+<li> Prevents the default behavior of an event. For example, preventing form submission or link navigation.
+</li>
+<p>
+
+form.addEventListener('submit', function(event) { <br>
+    event.preventDefault(); // Prevents the form from submitting <br>
+    console.log('Form submission prevented'); <br>
+}); <br>
+</p>
 
 
+<h3>stopPropagation(): </h3>
+<li>Stops the event from propagating to parent elements (bubbling or capturing). This is useful in event delegation scenarios.
+</li>
+<p>
+button.addEventListener('click', function(event) { <br>
+    event.stopPropagation(); // Prevents the event from bubbling up to parent elements <br>
+});
+</p>
+
+<h3>`stopImmediatePropagation()`</h3>
+<li>Stops the event from propagating, and prevents any other listeners on the same element from being triggered.
+</li>
+
+<h2>**Event Delegation**</h2>
+
+<li>Instead of attaching event listeners to many elements individually, you can use **event delegation** to attach a single event listener to a parent element and let it handle events for its children.
+</li>
+
+<p>ul id="myList"
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ul>
+</p>
+
+<h2> Example: Handling Multiple Events</h2>
+
+
+    <button id="myButtonn">Click Me</button>
+    <input type="text" id="myInput" placeholder="Type something">
+
+<p>In this example, when the user clicks the button, an alert shows up, and when the user types something in the input field, it logs the key that was pressed.
+</p>
+
+
+<h3>Summary</h3>
+
+<li> **Events** represent actions or occurrences that happen in the browser (e.g., clicks, keyboard input, page load).</li>
+<li> **Event Handling** is the process of capturing those events and executing a JavaScript function in response.</li>
+<li>Use `addEventListener` to attach event handlers (recommended method).</li>
+<li> Use `preventDefault()` to prevent default behavior and `stopPropagation()` to prevent events from bubbling up.</li>
+<li> **Event delegation** allows handling events for many child elements with a single parent listener.</li>
+
+</div>
+
+<h1><a href="./more.html">more</a></h1>
 <script>
-    function sum(){
-        let a= 20;
-        let b = 30;
-        console.log(a+b);
-    }
-  let btn = document.querySelector('.button');
-  console.log(btn);
+    const button1 = document.getElementById('myButton');
 
-</script>
+    // Attaching a click event handler
+    button.addEventListener('click', function() {
+        alert('Button clicked!');
+    });
+    </script>
     
+<script>
+    const list = document.getElementById('myList');
+
+    list.addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            alert('List item clicked: ' + event.target.textContent);
+        }
+    });
+</script>
+<script>
+    const button = document.getElementById('myButtonn');
+    const input = document.getElementById('myInput');
+
+    // Mouse Event
+    button.addEventListener('click', function() {
+        alert('Button was clicked!');
+    });
+
+    // Keyboard Event
+    input.addEventListener('keyup', function(event) {
+        console.log(`Key pressed: ${event.key}`);
+    });
+</script>
 </body>
 </html>
